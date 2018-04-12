@@ -151,6 +151,7 @@
 			<div class="navbar-inner">
 				<div class="brand"><span id="productName">${fns:getConfig('productName')}</span></div>
 				<ul id="userControl" class="nav pull-right">
+					<%--<li><iframe id="fancybox-frame" name="fancybox-frame1512283855267" frameborder="0" scrolling="no" hspace="0"  src="http://i.tianqi.com/index.php?c=code&a=getcode&id=34&h=25&w=280" style="height: 20px;margin-top: 15px;"></iframe></li>--%>
 					<li><a href="${pageContext.request.contextPath}${fns:getFrontPath()}/index-${fnc:getCurrentSiteId()}.html" target="_blank" title="访问网站主页"><i class="icon-home"></i></a></li>
 					<li id="themeSwitch" class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="主题切换"><i class="icon-th-large"></i></a>

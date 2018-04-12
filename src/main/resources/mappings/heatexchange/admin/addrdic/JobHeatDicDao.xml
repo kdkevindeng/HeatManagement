@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.heatexchange.admin.dao.addrdic.JobHeatDicDao">
+    
+	<sql id="jobHeatDicColumns">
+		a.id AS "id",
+		a.plc_addr AS "plcAddr",
+		a.modbus_addr AS "modbusAddr",
+		a.name AS "name",
+		a.w_r AS "wR",
+		a.remark AS "remark",
+		a.data_type AS "dataType"
+	</sql>
+	
+	<sql id="jobHeatDicJoins">
+	</sql>
+    
+	<select id="get" resultType="JobHeatDic">
+		SELECT 
+			<include refid="jobHeatDicColumns"/>
+		FROM job_heat_dic a
+		<include refid="jobHeatDicJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="JobHeatDic">
+		SELECT 
+			<include refid="jobHeatDicColumns"/>
+		FROM job_heat_dic a
+		<include refid="jobHeatDicJoins"/>
+		<where>
+			
+			<if test="plcAddr != null and plcAddr != ''">
+				AND a.plc_addr = #{plcAddr}
+			</if>
+			<if test="modbusAddr != null and modbusAddr != ''">
+				AND a.modbus_addr = #{modbusAddr}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="wR != null and wR != ''">
+				AND a.w_r = #{wR}
+			</if>
+			<if test="remark != null and remark != ''">
+				AND a.remark = #{remark}
+			</if>
+			<if test="dataType != null and dataType != ''">
+				AND a.data_type = #{dataType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="JobHeatDic">
+		SELECT 
+			<include refid="jobHeatDicColumns"/>
+		FROM job_heat_dic a
+		<include refid="jobHeatDicJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO job_heat_dic(
+			id,
+			plc_addr,
+			modbus_addr,
+			name,
+			w_r,
+			remark,
+			data_type
+		) VALUES (
+			#{id},
+			#{plcAddr},
+			#{modbusAddr},
+			#{name},
+			#{wR},
+			#{remark},
+			#{dataType}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE job_heat_dic SET 	
+			plc_addr = #{plcAddr},
+			modbus_addr = #{modbusAddr},
+			name = #{name},
+			w_r = #{wR},
+			remark = #{remark},
+			data_type = #{dataType}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM job_heat_dic
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
